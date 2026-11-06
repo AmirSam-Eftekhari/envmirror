@@ -39,7 +39,7 @@ def run_command(
     cwd: Path | None = None,
 ) -> CommandResult:
     """Run ``args`` (argv list) and capture bounded stdout+stderr as text."""
-    if not args:
+    if not args or not args[0] or timeout <= 0 or max_output < 0:
         return CommandResult("error")
     executable = shutil.which(args[0])
     if executable is None:

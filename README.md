@@ -8,7 +8,7 @@ a few non-sensitive settings) and compares two snapshots to show where the machi
 No cloud service, no account, no API key, no telemetry, no network access.
 
 > **Status: 0.1.0, not yet published to PyPI.** Install from source (see below).
-> The first public CI run on Windows, Linux and macOS is still pending; see
+> A successful GitHub Actions run across Windows, Linux and macOS has not yet been confirmed; see
 > [Supported platforms](#12-supported-platforms) for what has and has not been verified.
 
 ## 1. Problem statement
@@ -39,7 +39,7 @@ environments differ. It does **not** prove that any particular difference *cause
 Requires Python 3.11 or newer.
 
 ```bash
-git clone https://github.com/OWNER/envmirror.git   # replace OWNER once published
+git clone https://github.com/AmirSam-Eftekhari/envmirror.git
 cd envmirror
 python -m venv .venv
 # Linux/macOS: source .venv/bin/activate     Windows PowerShell: .venv\Scripts\Activate.ps1
@@ -225,9 +225,9 @@ redaction. Review any snapshot before sharing it.
 
 **Safeguards:** redaction happens before serialization; subprocesses never use a shell, have a
 timeout and bounded output, and run only fixed `--version` style probes; snapshot files are never
-executed or used to choose commands; no network access anywhere; snapshot input is size-limited,
-duplicate-key-checked and validated (control characters are rejected); HTML is generated with
-autoescaping and a restrictive CSP; terminal output treats snapshot data as plain text.
+executed or used to choose commands; EnvMirror itself makes no network requests; snapshot input is
+size-limited, duplicate-key-checked and validated (control characters are rejected); HTML is
+generated with autoescaping and a restrictive CSP; terminal output treats snapshot data as plain text.
 
 **Honest limits:** redaction is heuristic (name and pattern based) and cannot guarantee that no
 sensitive string survives, particularly with `--env-value`. The tests cover these protections but
@@ -235,9 +235,10 @@ are not a security audit. Report vulnerabilities as described in [SECURITY.md](S
 
 ## 12. Supported platforms
 
-Designed for Linux, macOS and Windows with Python 3.11-3.13; the CI workflow
-([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) targets that matrix. See the project's
-delivery notes for what was actually executed so far; the workflow itself has not yet run on GitHub.
+Designed for Linux, macOS and Windows with Python 3.11-3.13. The CI workflow
+([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) tests that full matrix on pushes to `main`
+and pull requests. Until the workflow has completed successfully on GitHub, treat this as the
+intended support matrix rather than a claim of verified compatibility on every platform.
 
 ## 13. Limitations
 

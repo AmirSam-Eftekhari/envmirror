@@ -1,3 +1,4 @@
+from envmirror.models.snapshot import SystemInfo
 from envmirror.scanner.system import collect_system, normalize_architecture
 import pytest
 
@@ -14,4 +15,4 @@ def test_architecture_normalization(raw, expected):
 def test_collect_system_has_core_fields_and_no_python_path():
     info = collect_system()
     assert info.platform and info.architecture
-    assert "python_executable" not in info.model_fields
+    assert "python_executable" not in SystemInfo.model_fields

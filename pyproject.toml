@@ -45,9 +45,9 @@ dev = [
 envmirror = "envmirror.cli:app"
 
 [project.urls]
-Homepage = "https://github.com/OWNER/envmirror"
-Issues = "https://github.com/OWNER/envmirror/issues"
-Changelog = "https://github.com/OWNER/envmirror/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/AmirSam-Eftekhari/envmirror"
+Issues = "https://github.com/AmirSam-Eftekhari/envmirror/issues"
+Changelog = "https://github.com/AmirSam-Eftekhari/envmirror/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/envmirror"]

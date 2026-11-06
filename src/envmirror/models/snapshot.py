@@ -37,7 +37,8 @@ MIGRATIONS: dict[int, Callable[[dict[str, Any]], dict[str, Any]]] = {}
 
 
 class _Model(BaseModel):
-    # Unknown fields are ignored (forward compatibility) and reported by the loader.
+    # Unknown fields are ignored for forward compatibility; the loader reports
+    # unknown top-level keys so newer snapshots are not silently mistaken for exact matches.
     model_config = ConfigDict(extra="ignore")
 
 
@@ -110,6 +111,11 @@ class Snapshot(_Model):
             raise ValueError(
                 f"schema_version {self.schema_version} is newer than supported "
                 f"major version {SUPPORTED_MAJOR}; upgrade EnvMirror"
+            )
+        if major < SUPPORTED_MAJOR:
+            raise ValueError(
+                f"schema_version {self.schema_version} is older than supported "
+                f"major version {SUPPORTED_MAJOR} and no migration is available"
             )
         return self
 

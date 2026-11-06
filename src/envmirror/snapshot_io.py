@@ -67,7 +67,12 @@ def read_snapshot(path: Path) -> tuple[Snapshot, list[str]]:
             raise SnapshotError(
                 f"File is larger than {MAX_SNAPSHOT_BYTES // (1024 * 1024)} MB: {path}"
             )
-        data = path.read_bytes()
+        with path.open("rb") as handle:
+            data = handle.read(MAX_SNAPSHOT_BYTES + 1)
+        if len(data) > MAX_SNAPSHOT_BYTES:
+            raise SnapshotError(
+                f"File is larger than {MAX_SNAPSHOT_BYTES // (1024 * 1024)} MB: {path}"
+            )
     except OSError as exc:
         raise SnapshotError(f"Cannot read {path}: {exc.strerror or exc}") from exc
     try:

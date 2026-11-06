@@ -64,3 +64,8 @@ def test_never_uses_shell_and_passes_argv_list(monkeypatch):
 def test_arguments_with_spaces_are_passed_intact():
     result = run_command([sys.executable, "-c", "import sys; print(sys.argv[1])", "a b  c"])
     assert result.output.strip() == "a b  c"
+
+
+def test_invalid_output_or_timeout_bounds_are_rejected():
+    assert run_command([sys.executable, "-c", "print(1)"], timeout=0).status == "error"
+    assert run_command([sys.executable, "-c", "print(1)"], max_output=-1).status == "error"

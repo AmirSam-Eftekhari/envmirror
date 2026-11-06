@@ -31,5 +31,5 @@ collections have size limits; duplicate JSON keys are rejected.
 - Minor version bump (`1.x`): only adds optional fields. Readers ignore unknown fields and report
   unknown top-level fields as warnings.
 - Major version bump: may break compatibility. A reader rejects a major version newer than it
-  supports with an actionable message and upgrades older majors via the `MIGRATIONS` registry in
-  `envmirror/models/snapshot.py` (empty today because 1 is the first major version).
+  supports. Older majors are accepted only when a migration is registered in
+  `envmirror/models/snapshot.py`; the registry is empty today because 1 is the first major version.

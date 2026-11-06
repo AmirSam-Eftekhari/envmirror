@@ -12,3 +12,9 @@ All notable changes are documented here. Format based on Keep a Changelog; versi
 - Rule-based risk engine with stable finding ids and cautious explanations.
 - Self-contained dark HTML report (no JavaScript, no external resources).
 - Secret redaction before serialization; opt-in environment names/values.
+
+### Fixed
+- Reject unsupported older snapshot schema majors when no migration is registered.
+- Keep snapshot reads bounded even if the file changes size after the initial metadata check.
+- Reject invalid subprocess timeout/output limits instead of risking an unbounded read.
+- Remove a Pydantic deprecation warning from the test suite.

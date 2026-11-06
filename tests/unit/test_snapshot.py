@@ -137,3 +137,19 @@ def test_write_to_missing_directory_fails_cleanly(tmp_path):
 def test_write_to_directory_path_fails_cleanly(tmp_path):
     with pytest.raises(OutputError, match="directory"):
         write_text_atomic(tmp_path, "x")
+
+
+def test_unsupported_older_major_is_rejected(machine_a):
+    import json
+
+    from envmirror.errors import SnapshotError
+    from envmirror.snapshot_io import parse_snapshot
+
+    raw = json.loads(machine_a.read_text(encoding="utf-8"))
+    raw["schema_version"] = "0.9"
+    try:
+        parse_snapshot(json.dumps(raw))
+    except SnapshotError as exc:
+        assert "older than supported" in str(exc)
+    else:
+        raise AssertionError("unsupported older schema major was accepted")
