@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="referrer" content="no-referrer">
+<title>EnvMirror report: machine-a.json vs machine-b.json</title>
+<style>
+:root{--bg:#0b1016;--panel:#111a24;--panel2:#16222f;--line:#233143;--text:#e6edf3;--muted:#9fb0c3;
+--accent:#38bdf8;--accent2:#22d3ee;--critical:#ff6b6b;--high:#fb923c;--medium:#facc15;--low:#38bdf8;--info:#94a3b8;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--sans)}
+main{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}
+.brand{font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent2)}
+h1{font-size:28px;margin:6px 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:40px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+code,.mono{font-family:var(--mono);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card .n{font-size:28px;font-weight:650;line-height:1.1}
+.card .l{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+dt{color:var(--muted)} dd{margin:0;overflow-wrap:anywhere}
+.notice{background:var(--panel2);border-left:3px solid var(--accent);padding:12px 16px;border-radius:6px;margin:16px 0}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:84px 1fr 40px;align-items:center;gap:10px}
+.track{background:var(--panel);border:1px solid var(--line);border-radius:6px;height:14px;overflow:hidden}
+.fill{height:100%}
+.fill.sev-critical{background:var(--critical)}.fill.sev-high{background:var(--high)}
+.fill.sev-medium{background:var(--medium)}.fill.sev-low{background:var(--low)}.fill.sev-info{background:var(--info)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel2);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.val{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:1px 9px;border-radius:999px;font:600 11px var(--mono);
+text-transform:uppercase;letter-spacing:.06em;border:1px solid currentColor}
+.badge.sev-critical{color:var(--critical)}.badge.sev-high{color:var(--high)}
+.badge.sev-medium{color:var(--medium)}.badge.sev-low{color:var(--low)}.badge.sev-info{color:var(--info)}
+.finding{background:var(--panel);border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:14px 16px;margin:0 0 12px}
+.finding.sev-critical{border-left-color:var(--critical)}.finding.sev-high{border-left-color:var(--high)}
+.finding.sev-medium{border-left-color:var(--medium)}.finding.sev-low{border-left-color:var(--low)}
+.finding.sev-info{border-left-color:var(--info)}
+.finding .id{font:12px var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.finding .next{color:var(--accent2)}
+ul.recs{padding-left:20px;margin:0}ul.recs li{margin-bottom:8px}
+a{color:var(--accent)}
+@media (max-width:560px){h1{font-size:23px}.bar{grid-template-columns:70px 1fr 32px}}
+@media print{body{background:#fff;color:#000}.card,.finding,.notice{background:#fff;border-color:#999}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <div class="brand">EnvMirror</div>
+  <h1>Environment comparison</h1>
+  <p class="muted">Baseline <code>machine-a.json</code> compared with target <code>machine-b.json</code></p>
+</header>
+
+<section aria-labelledby="overview">
+<h2 id="overview">Comparison overview</h2>
+<div class="notice">
+  <p><strong>Drift is not proof of cause.</strong> This report lists where the two environments differ.
+  Severities are rule-based estimates of compatibility risk. A difference may be unrelated to
+  any failure you are investigating, and an environment that looks identical can still behave differently.</p>
+</div>
+<div class="cards">
+  <div class="card"><div class="n">22</div><div class="l">Differences</div></div>
+  <div class="card"><div class="n">0</div><div class="l">critical</div></div>
+  <div class="card"><div class="n">6</div><div class="l">high</div></div>
+  <div class="card"><div class="n">10</div><div class="l">medium</div></div>
+  <div class="card"><div class="n">3</div><div class="l">low</div></div>
+  <div class="card"><div class="n">3</div><div class="l">info</div></div>
+</div>
+</section>
+
+<section aria-labelledby="risk">
+<h2 id="risk">Risk distribution</h2>
+<div class="bars" role="list">
+  <div class="bar" role="listitem">
+    <span class="badge sev-critical">critical</span>
+    <div class="track"><div class="fill sev-critical" style="width: 0%"></div></div>
+    <span class="mono">0</span>
+  </div>
+  <div class="bar" role="listitem">
+    <span class="badge sev-high">high</span>
+    <div class="track"><div class="fill sev-high" style="width: 27%"></div></div>
+    <span class="mono">6</span>
+  </div>
+  <div class="bar" role="listitem">
+    <span class="badge sev-medium">medium</span>
+    <div class="track"><div class="fill sev-medium" style="width: 45%"></div></div>
+    <span class="mono">10</span>
+  </div>
+  <div class="bar" role="listitem">
+    <span class="badge sev-low">low</span>
+    <div class="track"><div class="fill sev-low" style="width: 14%"></div></div>
+    <span class="mono">3</span>
+  </div>
+  <div class="bar" role="listitem">
+    <span class="badge sev-info">info</span>
+    <div class="track"><div class="fill sev-info" style="width: 14%"></div></div>
+    <span class="mono">3</span>
+  </div>
+</div>
+</section>
+
+<section aria-labelledby="sec-1">
+<h2 id="sec-1">System differences</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">system.architecture</td>
+  <td class="val">x86_64</td>
+  <td class="val">arm64</td>
+</tr>
+<tr>
+  <td><span class="badge sev-info">info</span></td>
+  <td class="val">system.platform</td>
+  <td class="val">Linux</td>
+  <td class="val">Windows</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section aria-labelledby="sec-2">
+<h2 id="sec-2">Runtime differences</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">runtimes.java</td>
+  <td class="val">21.0.3</td>
+  <td class="val">—</td>
+</tr>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">runtimes.node</td>
+  <td class="val">22.4.0</td>
+  <td class="val">18.20.4</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">runtimes.npm</td>
+  <td class="val">10.8.1</td>
+  <td class="val">10.7.0</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">runtimes.python</td>
+  <td class="val">3.12.3</td>
+  <td class="val">3.11.9</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section aria-labelledby="sec-3">
+<h2 id="sec-3">Dependency differences</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">packages.node.dependencies.next</td>
+  <td class="val">^14.2.5</td>
+  <td class="val">^13.5.6</td>
+</tr>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">packages.node.dependencies.zod</td>
+  <td class="val">^3.23.8</td>
+  <td class="val">—</td>
+</tr>
+<tr>
+  <td><span class="badge sev-high">high</span></td>
+  <td class="val">packages.python.pydantic</td>
+  <td class="val">2.8.2</td>
+  <td class="val">1.10.17</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.node.dependencies.react</td>
+  <td class="val">^18.3.1</td>
+  <td class="val">^18.2.0</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.node.dev_dependencies.vitest</td>
+  <td class="val">^2.0.2</td>
+  <td class="val">^1.6.0</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.node.lockfiles.pnpm-lock.yaml</td>
+  <td class="val">pnpm-lock.yaml</td>
+  <td class="val">—</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.node.package_manager</td>
+  <td class="val">pnpm@9.5.0</td>
+  <td class="val">yarn@1.22.22</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.python.requests</td>
+  <td class="val">2.32.3</td>
+  <td class="val">2.31.0</td>
+</tr>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">packages.python.rich</td>
+  <td class="val">13.7.1</td>
+  <td class="val">—</td>
+</tr>
+<tr>
+  <td><span class="badge sev-low">low</span></td>
+  <td class="val">packages.node.engines.node</td>
+  <td class="val">&gt;=20</td>
+  <td class="val">&gt;=18</td>
+</tr>
+<tr>
+  <td><span class="badge sev-info">info</span></td>
+  <td class="val">packages.node.lockfiles.yarn.lock</td>
+  <td class="val">—</td>
+  <td class="val">yarn.lock</td>
+</tr>
+<tr>
+  <td><span class="badge sev-info">info</span></td>
+  <td class="val">packages.python.colorama</td>
+  <td class="val">—</td>
+  <td class="val">0.4.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section aria-labelledby="sec-4">
+<h2 id="sec-4">Tool differences</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">tools.docker</td>
+  <td class="val">26.1.4</td>
+  <td class="val">—</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section aria-labelledby="sec-5">
+<h2 id="sec-5">Environment configuration differences</h2>
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+<tr>
+  <td><span class="badge sev-medium">medium</span></td>
+  <td class="val">environment.values.NODE_ENV</td>
+  <td class="val">development</td>
+  <td class="val">production</td>
+</tr>
+<tr>
+  <td><span class="badge sev-low">low</span></td>
+  <td class="val">environment.VIRTUAL_ENV</td>
+  <td class="val">set</td>
+  <td class="val">—</td>
+</tr>
+<tr>
+  <td><span class="badge sev-low">low</span></td>
+  <td class="val">environment.values.LANG</td>
+  <td class="val">en_US.UTF-8</td>
+  <td class="val">C.UTF-8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section aria-labelledby="details">
+<h2 id="details">Detailed findings</h2>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">packages.node.dependencies.next</span></h3>
+  <div class="id">RM-NODEDEP-MAJOR:packages.node.dependencies.next · potential compatibility risk</div>
+  <p>Node dependencies entry &#39;next&#39; is ^14.2.5 in the baseline and ^13.5.6 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.</p>
+  <p class="next">Next step: Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager.</p>
+</article>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">packages.node.dependencies.zod</span></h3>
+  <div class="id">RM-NODEDEP-MISSING:packages.node.dependencies.zod · confirmed difference</div>
+  <p>Node dependencies entry &#39;zod&#39; is present in the baseline (^3.23.8) but not found in the target. Declared under dependencies in the baseline package.json but absent in the target&#39;s.</p>
+  <p class="next">Next step: Check which branch or commit each machine has checked out, and that the lockfile was committed and installed.</p>
+</article>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">packages.python.pydantic</span></h3>
+  <div class="id">RM-PYPKG-MAJOR:packages.python.pydantic · potential compatibility risk</div>
+  <p>Python package &#39;pydantic&#39; is 2.8.2 in the baseline and 1.10.17 in the target. Major releases of libraries often include breaking API changes.</p>
+  <p class="next">Next step: Compare against the project&#39;s requirements or lock file; reinstall from it into a fresh virtual environment on the target.</p>
+</article>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">runtimes.java</span></h3>
+  <div class="id">RM-RUNTIME-MISSING:runtimes.java · confirmed difference</div>
+  <p>Runtime &#39;java&#39; is present in the baseline (21.0.3) but not found in the target. The runtime was detected in the baseline but not found in the target.</p>
+  <p class="next">Next step: Install the runtime on the target (or confirm the project does not need it) and re-run `envmirror scan`.</p>
+</article>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">runtimes.node</span></h3>
+  <div class="id">RM-RUNTIME-MAJOR:runtimes.node · potential compatibility risk</div>
+  <p>Runtime &#39;node&#39; is 22.4.0 in the baseline and 18.20.4 in the target. Major versions may remove or change language and standard-library behavior.</p>
+  <p class="next">Next step: Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project&#39;s tests on the target with the baseline version.</p>
+</article>
+<article class="finding sev-high">
+  <h3><span class="badge sev-high">high</span> <span class="mono">system.architecture</span></h3>
+  <div class="id">RM-ARCH:system.architecture · potential compatibility risk</div>
+  <p>System field &#39;architecture&#39; is x86_64 in the baseline and arm64 in the target. Native binaries, prebuilt wheels/addons and container images are architecture-specific.</p>
+  <p class="next">Next step: Check whether the project uses native extensions, containers or OS-specific scripts; if so, confirm they are built or tested for the target system.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">environment.values.NODE_ENV</span></h3>
+  <div class="id">RM-ENV-NODE-ENV:environment.values.NODE_ENV · potential compatibility risk</div>
+  <p>Environment variable &#39;NODE_ENV&#39; is development in the baseline and production in the target. NODE_ENV changes behavior of many Node libraries and build tools.</p>
+  <p class="next">Next step: Check shell profile, CI settings or container configuration for where this variable is set.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.node.dependencies.react</span></h3>
+  <div class="id">RM-NODEDEP-MINOR:packages.node.dependencies.react · potential compatibility risk</div>
+  <p>Node dependencies entry &#39;react&#39; is ^18.3.1 in the baseline and ^18.2.0 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.</p>
+  <p class="next">Next step: Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.node.dev_dependencies.vitest</span></h3>
+  <div class="id">RM-NODEDEV-MAJOR:packages.node.dev_dependencies.vitest · potential compatibility risk</div>
+  <p>Node dev dependencies entry &#39;vitest&#39; is ^2.0.2 in the baseline and ^1.6.0 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.</p>
+  <p class="next">Next step: Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.node.lockfiles.pnpm-lock.yaml</span></h3>
+  <div class="id">RM-LOCKFILE-MISSING:packages.node.lockfiles.pnpm-lock.yaml · potential compatibility risk</div>
+  <p>Node lockfile entry &#39;pnpm-lock.yaml&#39; is present in the baseline (pnpm-lock.yaml) but not found in the target. Without the same lockfile, installs may resolve different dependency versions.</p>
+  <p class="next">Next step: Check which branch or commit each machine has checked out, and that the lockfile was committed and installed.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.node.package_manager</span></h3>
+  <div class="id">RM-PKGMGR-MAJOR:packages.node.package_manager · potential compatibility risk</div>
+  <p>Node package manager entry &#39;packageManager&#39; is pnpm@9.5.0 in the baseline and yarn@1.22.22 in the target. Different package managers or major versions can resolve and install dependencies differently.</p>
+  <p class="next">Next step: Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.python.requests</span></h3>
+  <div class="id">RM-PYPKG-MINOR:packages.python.requests · potential compatibility risk</div>
+  <p>Python package &#39;requests&#39; is 2.32.3 in the baseline and 2.31.0 in the target. Minor releases may deprecate behavior or change defaults.</p>
+  <p class="next">Next step: Compare against the project&#39;s requirements or lock file; reinstall from it into a fresh virtual environment on the target.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">packages.python.rich</span></h3>
+  <div class="id">RM-PYPKG-MISSING:packages.python.rich · confirmed difference</div>
+  <p>Python package &#39;rich&#39; is present in the baseline (13.7.1) but not found in the target. Installed in the baseline but not the target. Snapshots do not record which packages the project requires, so this is not rated higher.</p>
+  <p class="next">Next step: Check whether the project needs this package; if so, install it from the project&#39;s requirements into the target environment.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">runtimes.npm</span></h3>
+  <div class="id">RM-RUNTIME-MINOR:runtimes.npm · potential compatibility risk</div>
+  <p>Runtime &#39;npm&#39; is 10.8.1 in the baseline and 10.7.0 in the target. Minor runtime releases can deprecate or add features the project relies on.</p>
+  <p class="next">Next step: Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project&#39;s tests on the target with the baseline version.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">runtimes.python</span></h3>
+  <div class="id">RM-RUNTIME-MINOR:runtimes.python · potential compatibility risk</div>
+  <p>Runtime &#39;python&#39; is 3.12.3 in the baseline and 3.11.9 in the target. Minor runtime releases can deprecate or add features the project relies on.</p>
+  <p class="next">Next step: Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project&#39;s tests on the target with the baseline version.</p>
+</article>
+<article class="finding sev-medium">
+  <h3><span class="badge sev-medium">medium</span> <span class="mono">tools.docker</span></h3>
+  <div class="id">RM-TOOL-MISSING:tools.docker · confirmed difference</div>
+  <p>Tool &#39;docker&#39; is present in the baseline (26.1.4) but not found in the target. The tool was detected in the baseline but not found in the target.</p>
+  <p class="next">Next step: Install the tool on the target if the workflow needs it, then re-scan.</p>
+</article>
+<article class="finding sev-low">
+  <h3><span class="badge sev-low">low</span> <span class="mono">environment.VIRTUAL_ENV</span></h3>
+  <div class="id">RM-ENV-PRESENCE-KNOWN:environment.VIRTUAL_ENV · potential compatibility risk</div>
+  <p>Environment variable &#39;VIRTUAL_ENV&#39; is present in the baseline (set) but not found in the target. Variables such as PYTHONPATH, JAVA_HOME or proxy settings can change which files and networks tools use. Values are intentionally not recorded.</p>
+  <p class="next">Next step: Check shell profile, CI settings or container configuration for where this variable is set on the baseline.</p>
+</article>
+<article class="finding sev-low">
+  <h3><span class="badge sev-low">low</span> <span class="mono">environment.values.LANG</span></h3>
+  <div class="id">RM-ENV-VALUE:environment.values.LANG · potential compatibility risk</div>
+  <p>Environment variable &#39;LANG&#39; is en_US.UTF-8 in the baseline and C.UTF-8 in the target. Locale, timezone and CI flags can change tool and test behavior.</p>
+  <p class="next">Next step: Check shell profile, CI settings or container configuration for where this variable is set.</p>
+</article>
+<article class="finding sev-low">
+  <h3><span class="badge sev-low">low</span> <span class="mono">packages.node.engines.node</span></h3>
+  <div class="id">RM-ENGINES:packages.node.engines.node · potential compatibility risk</div>
+  <p>Node engines entry &#39;node&#39; is &gt;=20 in the baseline and &gt;=18 in the target. The declared engine requirements differ between package.json files.</p>
+  <p class="next">Next step: Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager.</p>
+</article>
+<article class="finding sev-info">
+  <h3><span class="badge sev-info">info</span> <span class="mono">packages.node.lockfiles.yarn.lock</span></h3>
+  <div class="id">RM-EXTRA:packages.node.lockfiles.yarn.lock · informational</div>
+  <p>Node lockfile entry &#39;yarn.lock&#39; is present in the target (yarn.lock) but not in the baseline. The target has something the baseline lacks; this rarely explains a failure on the target.</p>
+  <p class="next">Next step: Check whether the target has uncommitted or branch-specific changes.</p>
+</article>
+<article class="finding sev-info">
+  <h3><span class="badge sev-info">info</span> <span class="mono">packages.python.colorama</span></h3>
+  <div class="id">RM-EXTRA:packages.python.colorama · informational</div>
+  <p>Python package &#39;colorama&#39; is present in the target (0.4.6) but not in the baseline. The target has something the baseline lacks; this rarely explains a failure on the target.</p>
+  <p class="next">Next step: No action needed unless an import or version conflict appears.</p>
+</article>
+<article class="finding sev-info">
+  <h3><span class="badge sev-info">info</span> <span class="mono">system.platform</span></h3>
+  <div class="id">RM-OS:system.platform · informational</div>
+  <p>System field &#39;platform&#39; is Linux in the baseline and Windows in the target. Different operating systems are common and often fine; it matters mainly for paths, line endings, native dependencies and shell scripts.</p>
+  <p class="next">Next step: Check whether the project uses native extensions, containers or OS-specific scripts; if so, confirm they are built or tested for the target system.</p>
+</article>
+</section>
+
+<section aria-labelledby="recs">
+<h2 id="recs">Diagnostic recommendations</h2>
+<ul class="recs">
+  <li><span class="badge sev-high">high</span> Compare package.json and lockfile in version control, then reinstall using the project&#39;s documented package manager. <span class="muted">(5 findings)</span></li>
+  <li><span class="badge sev-high">high</span> Check which branch or commit each machine has checked out, and that the lockfile was committed and installed. <span class="muted">(2 findings)</span></li>
+  <li><span class="badge sev-high">high</span> Compare against the project&#39;s requirements or lock file; reinstall from it into a fresh virtual environment on the target. <span class="muted">(2 findings)</span></li>
+  <li><span class="badge sev-high">high</span> Install the runtime on the target (or confirm the project does not need it) and re-run `envmirror scan`. <span class="muted">(1 finding)</span></li>
+  <li><span class="badge sev-high">high</span> Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project&#39;s tests on the target with the baseline version. <span class="muted">(3 findings)</span></li>
+  <li><span class="badge sev-high">high</span> Check whether the project uses native extensions, containers or OS-specific scripts; if so, confirm they are built or tested for the target system. <span class="muted">(1 finding)</span></li>
+  <li><span class="badge sev-medium">medium</span> Check shell profile, CI settings or container configuration for where this variable is set. <span class="muted">(2 findings)</span></li>
+  <li><span class="badge sev-medium">medium</span> Check whether the project needs this package; if so, install it from the project&#39;s requirements into the target environment. <span class="muted">(1 finding)</span></li>
+  <li><span class="badge sev-medium">medium</span> Install the tool on the target if the workflow needs it, then re-scan. <span class="muted">(1 finding)</span></li>
+  <li><span class="badge sev-low">low</span> Check shell profile, CI settings or container configuration for where this variable is set on the baseline. <span class="muted">(1 finding)</span></li>
+</ul>
+</section>
+
+<section aria-labelledby="meta">
+<h2 id="meta">Snapshot metadata</h2>
+<div class="two">
+  <div class="card">
+    <h3>Baseline: <code>machine-a.json</code></h3>
+    <dl>
+      <dt>Created</dt><dd>2026-11-04T09:15:00Z</dd>
+      <dt>System</dt><dd>Linux 6.8.0-45-generic</dd>
+      <dt>Architecture</dt><dd>x86_64</dd>
+      <dt>Python impl.</dt><dd>CPython</dd>
+      <dt>EnvMirror</dt><dd>0.1.0 (schema 1.0)</dd>
+      <dt>Python packages</dt><dd>6</dd>
+      <dt>Node project</dt><dd>included</dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h3>Target: <code>machine-b.json</code></h3>
+    <dl>
+      <dt>Created</dt><dd>2026-11-04T09:42:00Z</dd>
+      <dt>System</dt><dd>Windows 11</dd>
+      <dt>Architecture</dt><dd>arm64</dd>
+      <dt>Python impl.</dt><dd>CPython</dd>
+      <dt>EnvMirror</dt><dd>0.1.0 (schema 1.0)</dd>
+      <dt>Python packages</dt><dd>6</dd>
+      <dt>Node project</dt><dd>included</dd>
+    </dl>
+  </div>
+</div>
+<p class="muted">Generated offline by EnvMirror. This file contains no scripts and loads no external resources.</p>
+</section>
+</main>
+</body>
+</html>

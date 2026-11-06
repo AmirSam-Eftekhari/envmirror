@@ -1,0 +1,91 @@
+{
+  "created_at": "2026-11-04T09:42:00Z",
+  "environment": {
+    "present": [],
+    "values": {
+      "LANG": "C.UTF-8",
+      "NODE_ENV": "production"
+    }
+  },
+  "envmirror_version": "0.1.0",
+  "metadata": {
+    "project_scanned": true,
+    "scan_warnings": [],
+    "scanner_version": "0.1.0"
+  },
+  "packages": {
+    "node": {
+      "dependencies": {
+        "next": "^13.5.6",
+        "react": "^18.2.0"
+      },
+      "dev_dependencies": {
+        "typescript": "^5.5.3",
+        "vitest": "^1.6.0"
+      },
+      "engines": {
+        "node": ">=18"
+      },
+      "lockfiles": [
+        "yarn.lock"
+      ],
+      "package_manager": "yarn@1.22.22"
+    },
+    "python": {
+      "colorama": "0.4.6",
+      "numpy": "2.0.0",
+      "pydantic": "1.10.17",
+      "pytest": "8.2.2",
+      "requests": "2.31.0",
+      "typer": "0.12.3"
+    }
+  },
+  "runtimes": {
+    "java": {
+      "detail": null,
+      "status": "not_found",
+      "version": null
+    },
+    "node": {
+      "detail": null,
+      "status": "found",
+      "version": "18.20.4"
+    },
+    "npm": {
+      "detail": null,
+      "status": "found",
+      "version": "10.7.0"
+    },
+    "python": {
+      "detail": null,
+      "status": "found",
+      "version": "3.11.9"
+    },
+    "rustc": {
+      "detail": null,
+      "status": "not_found",
+      "version": null
+    }
+  },
+  "schema_version": "1.0",
+  "system": {
+    "architecture": "arm64",
+    "cpu_count": 8,
+    "os_release": "11",
+    "os_version": "10.0.22631",
+    "platform": "Windows",
+    "python_implementation": "CPython"
+  },
+  "tools": {
+    "docker": {
+      "detail": null,
+      "status": "not_found",
+      "version": null
+    },
+    "git": {
+      "detail": null,
+      "status": "found",
+      "version": "2.45.2"
+    }
+  }
+}

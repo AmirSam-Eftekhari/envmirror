@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="referrer" content="no-referrer">
+<title>EnvMirror report: {{ result.baseline.label }} vs {{ result.target.label }}</title>
+<style>
+:root{--bg:#0b1016;--panel:#111a24;--panel2:#16222f;--line:#233143;--text:#e6edf3;--muted:#9fb0c3;
+--accent:#38bdf8;--accent2:#22d3ee;--critical:#ff6b6b;--high:#fb923c;--medium:#facc15;--low:#38bdf8;--info:#94a3b8;
+--mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 var(--sans)}
+main{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+header.top{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px}
+.brand{font:600 13px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--accent2)}
+h1{font-size:28px;margin:6px 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:40px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+h3{font-size:15px;margin:0 0 6px}
+p{margin:0 0 10px}
+.muted{color:var(--muted)}
+code,.mono{font-family:var(--mono);font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card .n{font-size:28px;font-weight:650;line-height:1.1}
+.card .l{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 14px}
+dt{color:var(--muted)} dd{margin:0;overflow-wrap:anywhere}
+.notice{background:var(--panel2);border-left:3px solid var(--accent);padding:12px 16px;border-radius:6px;margin:16px 0}
+.bars{display:grid;gap:8px}
+.bar{display:grid;grid-template-columns:84px 1fr 40px;align-items:center;gap:10px}
+.track{background:var(--panel);border:1px solid var(--line);border-radius:6px;height:14px;overflow:hidden}
+.fill{height:100%}
+.fill.sev-critical{background:var(--critical)}.fill.sev-high{background:var(--high)}
+.fill.sev-medium{background:var(--medium)}.fill.sev-low{background:var(--low)}.fill.sev-info{background:var(--info)}
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--panel2);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+td.val{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.badge{display:inline-block;padding:1px 9px;border-radius:999px;font:600 11px var(--mono);
+text-transform:uppercase;letter-spacing:.06em;border:1px solid currentColor}
+.badge.sev-critical{color:var(--critical)}.badge.sev-high{color:var(--high)}
+.badge.sev-medium{color:var(--medium)}.badge.sev-low{color:var(--low)}.badge.sev-info{color:var(--info)}
+.finding{background:var(--panel);border:1px solid var(--line);border-left-width:4px;border-radius:10px;padding:14px 16px;margin:0 0 12px}
+.finding.sev-critical{border-left-color:var(--critical)}.finding.sev-high{border-left-color:var(--high)}
+.finding.sev-medium{border-left-color:var(--medium)}.finding.sev-low{border-left-color:var(--low)}
+.finding.sev-info{border-left-color:var(--info)}
+.finding .id{font:12px var(--mono);color:var(--muted);overflow-wrap:anywhere}
+.finding .next{color:var(--accent2)}
+ul.recs{padding-left:20px;margin:0}ul.recs li{margin-bottom:8px}
+a{color:var(--accent)}
+@media (max-width:560px){h1{font-size:23px}.bar{grid-template-columns:70px 1fr 32px}}
+@media print{body{background:#fff;color:#000}.card,.finding,.notice{background:#fff;border-color:#999}}
+</style>
+</head>
+<body>
+<main>
+<header class="top">
+  <div class="brand">EnvMirror</div>
+  <h1>Environment comparison</h1>
+  <p class="muted">Baseline <code>{{ result.baseline.label }}</code> compared with target <code>{{ result.target.label }}</code></p>
+</header>
+
+<section aria-labelledby="overview">
+<h2 id="overview">Comparison overview</h2>
+<div class="notice">
+  <p><strong>Drift is not proof of cause.</strong> This report lists where the two environments differ.
+  Severities are rule-based estimates of compatibility risk. A difference may be unrelated to
+  any failure you are investigating, and an environment that looks identical can still behave differently.</p>
+</div>
+<div class="cards">
+  <div class="card"><div class="n">{{ result.summary.total }}</div><div class="l">Differences</div></div>
+  {% for row in severity_rows %}
+  <div class="card"><div class="n">{{ row.count }}</div><div class="l">{{ row.name }}</div></div>
+  {% endfor %}
+</div>
+</section>
+
+<section aria-labelledby="risk">
+<h2 id="risk">Risk distribution</h2>
+<div class="bars" role="list">
+{% for row in severity_rows %}
+  <div class="bar" role="listitem">
+    <span class="badge sev-{{ row.name }}">{{ row.name }}</span>
+    <div class="track"><div class="fill sev-{{ row.name }}" style="width: {{ row.pct }}%"></div></div>
+    <span class="mono">{{ row.count }}</span>
+  </div>
+{% endfor %}
+</div>
+</section>
+
+{% for section in sections %}
+<section aria-labelledby="sec-{{ loop.index }}">
+<h2 id="sec-{{ loop.index }}">{{ section.title }}</h2>
+{% if section.findings %}
+<div class="table-wrap">
+<table>
+<thead><tr><th scope="col">Severity</th><th scope="col">Field</th><th scope="col">Baseline</th><th scope="col">Target</th></tr></thead>
+<tbody>
+{% for f in section.findings %}
+<tr>
+  <td><span class="badge sev-{{ f.severity }}">{{ f.severity }}</span></td>
+  <td class="val">{{ f.field }}</td>
+  <td class="val">{{ f.expected if f.expected is not none else "—" }}</td>
+  <td class="val">{{ f.actual if f.actual is not none else "—" }}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+{% else %}
+<p class="muted">No differences in this area.</p>
+{% endif %}
+</section>
+{% endfor %}
+
+<section aria-labelledby="details">
+<h2 id="details">Detailed findings</h2>
+{% for f in findings %}
+<article class="finding sev-{{ f.severity }}">
+  <h3><span class="badge sev-{{ f.severity }}">{{ f.severity }}</span> <span class="mono">{{ f.field }}</span></h3>
+  <div class="id">{{ f.id }} · {{ f.classification | replace("_", " ") }}</div>
+  <p>{{ f.explanation }}</p>
+  <p class="next">Next step: {{ f.suggested_action }}</p>
+</article>
+{% else %}
+<p class="muted">No differences were found.</p>
+{% endfor %}
+</section>
+
+<section aria-labelledby="recs">
+<h2 id="recs">Diagnostic recommendations</h2>
+{% if recommendations %}
+<ul class="recs">
+{% for r in recommendations %}
+  <li><span class="badge sev-{{ r.severity }}">{{ r.severity }}</span> {{ r.action }} <span class="muted">({{ r.count }} finding{{ "" if r.count == 1 else "s" }})</span></li>
+{% endfor %}
+</ul>
+{% else %}
+<p class="muted">No actions suggested.</p>
+{% endif %}
+</section>
+
+<section aria-labelledby="meta">
+<h2 id="meta">Snapshot metadata</h2>
+<div class="two">
+{% for role, s in [("Baseline", baseline), ("Target", target)] %}
+  <div class="card">
+    <h3>{{ role }}: <code>{{ s.label }}</code></h3>
+    <dl>
+      <dt>Created</dt><dd>{{ s.created_at }}</dd>
+      <dt>System</dt><dd>{{ s.platform }} {{ s.os_release }}</dd>
+      <dt>Architecture</dt><dd>{{ s.architecture }}</dd>
+      <dt>Python impl.</dt><dd>{{ s.python_implementation }}</dd>
+      <dt>EnvMirror</dt><dd>{{ s.envmirror_version }} (schema {{ s.schema_version }})</dd>
+      <dt>Python packages</dt><dd>{{ s.python_package_count }}</dd>
+      <dt>Node project</dt><dd>{{ "included" if s.node_included else "not included" }}</dd>
+    </dl>
+    {% for w in s.warnings %}<p class="muted">Warning: {{ w }}</p>{% endfor %}
+  </div>
+{% endfor %}
+</div>
+<p class="muted">Generated offline by EnvMirror. This file contains no scripts and loads no external resources.</p>
+</section>
+</main>
+</body>
+</html>

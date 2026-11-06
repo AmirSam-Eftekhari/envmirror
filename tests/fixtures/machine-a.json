@@ -1,0 +1,94 @@
+{
+  "created_at": "2026-11-04T09:15:00Z",
+  "environment": {
+    "present": [
+      "VIRTUAL_ENV"
+    ],
+    "values": {
+      "LANG": "en_US.UTF-8",
+      "NODE_ENV": "development"
+    }
+  },
+  "envmirror_version": "0.1.0",
+  "metadata": {
+    "project_scanned": true,
+    "scan_warnings": [],
+    "scanner_version": "0.1.0"
+  },
+  "packages": {
+    "node": {
+      "dependencies": {
+        "next": "^14.2.5",
+        "react": "^18.3.1",
+        "zod": "^3.23.8"
+      },
+      "dev_dependencies": {
+        "typescript": "^5.5.3",
+        "vitest": "^2.0.2"
+      },
+      "engines": {
+        "node": ">=20"
+      },
+      "lockfiles": [
+        "pnpm-lock.yaml"
+      ],
+      "package_manager": "pnpm@9.5.0"
+    },
+    "python": {
+      "numpy": "2.0.0",
+      "pydantic": "2.8.2",
+      "pytest": "8.2.2",
+      "requests": "2.32.3",
+      "rich": "13.7.1",
+      "typer": "0.12.3"
+    }
+  },
+  "runtimes": {
+    "java": {
+      "detail": null,
+      "status": "found",
+      "version": "21.0.3"
+    },
+    "node": {
+      "detail": null,
+      "status": "found",
+      "version": "22.4.0"
+    },
+    "npm": {
+      "detail": null,
+      "status": "found",
+      "version": "10.8.1"
+    },
+    "python": {
+      "detail": null,
+      "status": "found",
+      "version": "3.12.3"
+    },
+    "rustc": {
+      "detail": null,
+      "status": "not_found",
+      "version": null
+    }
+  },
+  "schema_version": "1.0",
+  "system": {
+    "architecture": "x86_64",
+    "cpu_count": 16,
+    "os_release": "6.8.0-45-generic",
+    "os_version": "#45-Ubuntu SMP PREEMPT_DYNAMIC",
+    "platform": "Linux",
+    "python_implementation": "CPython"
+  },
+  "tools": {
+    "docker": {
+      "detail": null,
+      "status": "found",
+      "version": "26.1.4"
+    },
+    "git": {
+      "detail": null,
+      "status": "found",
+      "version": "2.45.2"
+    }
+  }
+}

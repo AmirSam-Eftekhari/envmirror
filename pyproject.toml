@@ -1,0 +1,83 @@
+[build-system]
+requires = ["hatchling>=1.24,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "envmirror"
+version = "0.1.0"
+description = "Compare development environments. Find configuration drift."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { file = "LICENSE" }
+authors = [{ name = "EnvMirror contributors" }]
+keywords = ["environment", "diagnostics", "drift", "developer-tools", "cli"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: MacOS",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+]
+dependencies = [
+  "typer>=0.12,<1",
+  "pydantic>=2.6,<3",
+  "rich>=13.7,<15",
+  "jinja2>=3.1,<4",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8,<9",
+  "ruff>=0.5,<1",
+  "mypy>=1.10,<2",
+  "build>=1.2,<2",
+]
+
+[project.scripts]
+envmirror = "envmirror.cli:app"
+
+[project.urls]
+Homepage = "https://github.com/OWNER/envmirror"
+Issues = "https://github.com/OWNER/envmirror/issues"
+Changelog = "https://github.com/OWNER/envmirror/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/envmirror"]
+
+[tool.hatch.build.targets.sdist]
+include = ["/src", "/tests", "/docs", "/examples", "/README.md", "/LICENSE", "/CHANGELOG.md",
+  "/CONTRIBUTING.md", "/SECURITY.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests"]
+addopts = "-ra --strict-markers"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "UP", "B"]
+# Long lines are left to the formatter; they are not treated as lint errors.
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+# Typer builds options from default values and supports Optional[...] annotations.
+"src/envmirror/cli.py" = ["B008", "UP007", "UP045"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["src/envmirror"]
+warn_unreachable = true

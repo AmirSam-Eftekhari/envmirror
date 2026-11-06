@@ -1,0 +1,306 @@
+{
+  "baseline": {
+    "architecture": "x86_64",
+    "created_at": "2026-11-04T09:15:00Z",
+    "envmirror_version": "0.1.0",
+    "label": "machine-a.json",
+    "platform": "Linux",
+    "schema_version": "1.0"
+  },
+  "findings": [
+    {
+      "actual": "^13.5.6",
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "^14.2.5",
+      "explanation": "Node dependencies entry 'next' is ^14.2.5 in the baseline and ^13.5.6 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.",
+      "field": "packages.node.dependencies.next",
+      "id": "RM-NODEDEP-MAJOR:packages.node.dependencies.next",
+      "rule_id": "RM-NODEDEP-MAJOR",
+      "severity": "high",
+      "suggested_action": "Compare package.json and lockfile in version control, then reinstall using the project's documented package manager."
+    },
+    {
+      "actual": null,
+      "category": "node_package",
+      "classification": "confirmed_difference",
+      "expected": "^3.23.8",
+      "explanation": "Node dependencies entry 'zod' is present in the baseline (^3.23.8) but not found in the target. Declared under dependencies in the baseline package.json but absent in the target's.",
+      "field": "packages.node.dependencies.zod",
+      "id": "RM-NODEDEP-MISSING:packages.node.dependencies.zod",
+      "rule_id": "RM-NODEDEP-MISSING",
+      "severity": "high",
+      "suggested_action": "Check which branch or commit each machine has checked out, and that the lockfile was committed and installed."
+    },
+    {
+      "actual": "1.10.17",
+      "category": "python_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "2.8.2",
+      "explanation": "Python package 'pydantic' is 2.8.2 in the baseline and 1.10.17 in the target. Major releases of libraries often include breaking API changes.",
+      "field": "packages.python.pydantic",
+      "id": "RM-PYPKG-MAJOR:packages.python.pydantic",
+      "rule_id": "RM-PYPKG-MAJOR",
+      "severity": "high",
+      "suggested_action": "Compare against the project's requirements or lock file; reinstall from it into a fresh virtual environment on the target."
+    },
+    {
+      "actual": null,
+      "category": "runtime",
+      "classification": "confirmed_difference",
+      "expected": "21.0.3",
+      "explanation": "Runtime 'java' is present in the baseline (21.0.3) but not found in the target. The runtime was detected in the baseline but not found in the target.",
+      "field": "runtimes.java",
+      "id": "RM-RUNTIME-MISSING:runtimes.java",
+      "rule_id": "RM-RUNTIME-MISSING",
+      "severity": "high",
+      "suggested_action": "Install the runtime on the target (or confirm the project does not need it) and re-run `envmirror scan`."
+    },
+    {
+      "actual": "18.20.4",
+      "category": "runtime",
+      "classification": "potential_compatibility_risk",
+      "expected": "22.4.0",
+      "explanation": "Runtime 'node' is 22.4.0 in the baseline and 18.20.4 in the target. Major versions may remove or change language and standard-library behavior.",
+      "field": "runtimes.node",
+      "id": "RM-RUNTIME-MAJOR:runtimes.node",
+      "rule_id": "RM-RUNTIME-MAJOR",
+      "severity": "high",
+      "suggested_action": "Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project's tests on the target with the baseline version."
+    },
+    {
+      "actual": "arm64",
+      "category": "system",
+      "classification": "potential_compatibility_risk",
+      "expected": "x86_64",
+      "explanation": "System field 'architecture' is x86_64 in the baseline and arm64 in the target. Native binaries, prebuilt wheels/addons and container images are architecture-specific.",
+      "field": "system.architecture",
+      "id": "RM-ARCH:system.architecture",
+      "rule_id": "RM-ARCH",
+      "severity": "high",
+      "suggested_action": "Check whether the project uses native extensions, containers or OS-specific scripts; if so, confirm they are built or tested for the target system."
+    },
+    {
+      "actual": "production",
+      "category": "environment",
+      "classification": "potential_compatibility_risk",
+      "expected": "development",
+      "explanation": "Environment variable 'NODE_ENV' is development in the baseline and production in the target. NODE_ENV changes behavior of many Node libraries and build tools.",
+      "field": "environment.values.NODE_ENV",
+      "id": "RM-ENV-NODE-ENV:environment.values.NODE_ENV",
+      "rule_id": "RM-ENV-NODE-ENV",
+      "severity": "medium",
+      "suggested_action": "Check shell profile, CI settings or container configuration for where this variable is set."
+    },
+    {
+      "actual": "^18.2.0",
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "^18.3.1",
+      "explanation": "Node dependencies entry 'react' is ^18.3.1 in the baseline and ^18.2.0 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.",
+      "field": "packages.node.dependencies.react",
+      "id": "RM-NODEDEP-MINOR:packages.node.dependencies.react",
+      "rule_id": "RM-NODEDEP-MINOR",
+      "severity": "medium",
+      "suggested_action": "Compare package.json and lockfile in version control, then reinstall using the project's documented package manager."
+    },
+    {
+      "actual": "^1.6.0",
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "^2.0.2",
+      "explanation": "Node dev dependencies entry 'vitest' is ^2.0.2 in the baseline and ^1.6.0 in the target. Only declared version ranges from package.json were compared; the versions actually installed (lockfile) were not examined.",
+      "field": "packages.node.dev_dependencies.vitest",
+      "id": "RM-NODEDEV-MAJOR:packages.node.dev_dependencies.vitest",
+      "rule_id": "RM-NODEDEV-MAJOR",
+      "severity": "medium",
+      "suggested_action": "Compare package.json and lockfile in version control, then reinstall using the project's documented package manager."
+    },
+    {
+      "actual": null,
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "pnpm-lock.yaml",
+      "explanation": "Node lockfile entry 'pnpm-lock.yaml' is present in the baseline (pnpm-lock.yaml) but not found in the target. Without the same lockfile, installs may resolve different dependency versions.",
+      "field": "packages.node.lockfiles.pnpm-lock.yaml",
+      "id": "RM-LOCKFILE-MISSING:packages.node.lockfiles.pnpm-lock.yaml",
+      "rule_id": "RM-LOCKFILE-MISSING",
+      "severity": "medium",
+      "suggested_action": "Check which branch or commit each machine has checked out, and that the lockfile was committed and installed."
+    },
+    {
+      "actual": "yarn@1.22.22",
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "pnpm@9.5.0",
+      "explanation": "Node package manager entry 'packageManager' is pnpm@9.5.0 in the baseline and yarn@1.22.22 in the target. Different package managers or major versions can resolve and install dependencies differently.",
+      "field": "packages.node.package_manager",
+      "id": "RM-PKGMGR-MAJOR:packages.node.package_manager",
+      "rule_id": "RM-PKGMGR-MAJOR",
+      "severity": "medium",
+      "suggested_action": "Compare package.json and lockfile in version control, then reinstall using the project's documented package manager."
+    },
+    {
+      "actual": "2.31.0",
+      "category": "python_package",
+      "classification": "potential_compatibility_risk",
+      "expected": "2.32.3",
+      "explanation": "Python package 'requests' is 2.32.3 in the baseline and 2.31.0 in the target. Minor releases may deprecate behavior or change defaults.",
+      "field": "packages.python.requests",
+      "id": "RM-PYPKG-MINOR:packages.python.requests",
+      "rule_id": "RM-PYPKG-MINOR",
+      "severity": "medium",
+      "suggested_action": "Compare against the project's requirements or lock file; reinstall from it into a fresh virtual environment on the target."
+    },
+    {
+      "actual": null,
+      "category": "python_package",
+      "classification": "confirmed_difference",
+      "expected": "13.7.1",
+      "explanation": "Python package 'rich' is present in the baseline (13.7.1) but not found in the target. Installed in the baseline but not the target. Snapshots do not record which packages the project requires, so this is not rated higher.",
+      "field": "packages.python.rich",
+      "id": "RM-PYPKG-MISSING:packages.python.rich",
+      "rule_id": "RM-PYPKG-MISSING",
+      "severity": "medium",
+      "suggested_action": "Check whether the project needs this package; if so, install it from the project's requirements into the target environment."
+    },
+    {
+      "actual": "10.7.0",
+      "category": "runtime",
+      "classification": "potential_compatibility_risk",
+      "expected": "10.8.1",
+      "explanation": "Runtime 'npm' is 10.8.1 in the baseline and 10.7.0 in the target. Minor runtime releases can deprecate or add features the project relies on.",
+      "field": "runtimes.npm",
+      "id": "RM-RUNTIME-MINOR:runtimes.npm",
+      "rule_id": "RM-RUNTIME-MINOR",
+      "severity": "medium",
+      "suggested_action": "Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project's tests on the target with the baseline version."
+    },
+    {
+      "actual": "3.11.9",
+      "category": "runtime",
+      "classification": "potential_compatibility_risk",
+      "expected": "3.12.3",
+      "explanation": "Runtime 'python' is 3.12.3 in the baseline and 3.11.9 in the target. Minor runtime releases can deprecate or add features the project relies on.",
+      "field": "runtimes.python",
+      "id": "RM-RUNTIME-MINOR:runtimes.python",
+      "rule_id": "RM-RUNTIME-MINOR",
+      "severity": "medium",
+      "suggested_action": "Compare against the version the project declares (for example .nvmrc, engines, python_requires or CI config) and run the project's tests on the target with the baseline version."
+    },
+    {
+      "actual": null,
+      "category": "tool",
+      "classification": "confirmed_difference",
+      "expected": "26.1.4",
+      "explanation": "Tool 'docker' is present in the baseline (26.1.4) but not found in the target. The tool was detected in the baseline but not found in the target.",
+      "field": "tools.docker",
+      "id": "RM-TOOL-MISSING:tools.docker",
+      "rule_id": "RM-TOOL-MISSING",
+      "severity": "medium",
+      "suggested_action": "Install the tool on the target if the workflow needs it, then re-scan."
+    },
+    {
+      "actual": null,
+      "category": "environment",
+      "classification": "potential_compatibility_risk",
+      "expected": "set",
+      "explanation": "Environment variable 'VIRTUAL_ENV' is present in the baseline (set) but not found in the target. Variables such as PYTHONPATH, JAVA_HOME or proxy settings can change which files and networks tools use. Values are intentionally not recorded.",
+      "field": "environment.VIRTUAL_ENV",
+      "id": "RM-ENV-PRESENCE-KNOWN:environment.VIRTUAL_ENV",
+      "rule_id": "RM-ENV-PRESENCE-KNOWN",
+      "severity": "low",
+      "suggested_action": "Check shell profile, CI settings or container configuration for where this variable is set on the baseline."
+    },
+    {
+      "actual": "C.UTF-8",
+      "category": "environment",
+      "classification": "potential_compatibility_risk",
+      "expected": "en_US.UTF-8",
+      "explanation": "Environment variable 'LANG' is en_US.UTF-8 in the baseline and C.UTF-8 in the target. Locale, timezone and CI flags can change tool and test behavior.",
+      "field": "environment.values.LANG",
+      "id": "RM-ENV-VALUE:environment.values.LANG",
+      "rule_id": "RM-ENV-VALUE",
+      "severity": "low",
+      "suggested_action": "Check shell profile, CI settings or container configuration for where this variable is set."
+    },
+    {
+      "actual": ">=18",
+      "category": "node_package",
+      "classification": "potential_compatibility_risk",
+      "expected": ">=20",
+      "explanation": "Node engines entry 'node' is >=20 in the baseline and >=18 in the target. The declared engine requirements differ between package.json files.",
+      "field": "packages.node.engines.node",
+      "id": "RM-ENGINES:packages.node.engines.node",
+      "rule_id": "RM-ENGINES",
+      "severity": "low",
+      "suggested_action": "Compare package.json and lockfile in version control, then reinstall using the project's documented package manager."
+    },
+    {
+      "actual": "yarn.lock",
+      "category": "node_package",
+      "classification": "informational",
+      "expected": null,
+      "explanation": "Node lockfile entry 'yarn.lock' is present in the target (yarn.lock) but not in the baseline. The target has something the baseline lacks; this rarely explains a failure on the target.",
+      "field": "packages.node.lockfiles.yarn.lock",
+      "id": "RM-EXTRA:packages.node.lockfiles.yarn.lock",
+      "rule_id": "RM-EXTRA",
+      "severity": "info",
+      "suggested_action": "Check whether the target has uncommitted or branch-specific changes."
+    },
+    {
+      "actual": "0.4.6",
+      "category": "python_package",
+      "classification": "informational",
+      "expected": null,
+      "explanation": "Python package 'colorama' is present in the target (0.4.6) but not in the baseline. The target has something the baseline lacks; this rarely explains a failure on the target.",
+      "field": "packages.python.colorama",
+      "id": "RM-EXTRA:packages.python.colorama",
+      "rule_id": "RM-EXTRA",
+      "severity": "info",
+      "suggested_action": "No action needed unless an import or version conflict appears."
+    },
+    {
+      "actual": "Windows",
+      "category": "system",
+      "classification": "informational",
+      "expected": "Linux",
+      "explanation": "System field 'platform' is Linux in the baseline and Windows in the target. Different operating systems are common and often fine; it matters mainly for paths, line endings, native dependencies and shell scripts.",
+      "field": "system.platform",
+      "id": "RM-OS:system.platform",
+      "rule_id": "RM-OS",
+      "severity": "info",
+      "suggested_action": "Check whether the project uses native extensions, containers or OS-specific scripts; if so, confirm they are built or tested for the target system."
+    }
+  ],
+  "summary": {
+    "by_category": {
+      "environment": 3,
+      "node_package": 8,
+      "python_package": 4,
+      "runtime": 4,
+      "system": 2,
+      "tool": 1
+    },
+    "by_classification": {
+      "confirmed_difference": 4,
+      "informational": 3,
+      "potential_compatibility_risk": 15
+    },
+    "by_severity": {
+      "high": 6,
+      "info": 3,
+      "low": 3,
+      "medium": 10
+    },
+    "total": 22
+  },
+  "target": {
+    "architecture": "arm64",
+    "created_at": "2026-11-04T09:42:00Z",
+    "envmirror_version": "0.1.0",
+    "label": "machine-b.json",
+    "platform": "Windows",
+    "schema_version": "1.0"
+  }
+}
