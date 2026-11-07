@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any
+from typing import Any, TypedDict
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
@@ -20,6 +20,9 @@ _SECTIONS: tuple[tuple[str, tuple[Category, ...]], ...] = (
     ("Environment configuration differences", (Category.ENVIRONMENT,)),
 )
 
+class _ReportSection(TypedDict):
+    title: str
+    findings: list[Finding]
 
 def _environment() -> Environment:
     # autoescape=True explicitly: the template name ends in .j2, so extension-based
@@ -60,7 +63,7 @@ def render_html(result: ComparisonResult, baseline: Snapshot, target: Snapshot) 
         severity_rows.append(
             {"name": sev.value, "count": count, "pct": round(100 * count / total) if total else 0}
         )
-    sections = []
+    sections: list[_ReportSection] = []
     for title, categories in _SECTIONS:
         items = [f for f in findings if f.category in categories]
         sections.append({"title": title, "findings": items})
