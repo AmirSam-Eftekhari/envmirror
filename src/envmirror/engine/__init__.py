@@ -77,4 +77,3 @@ def compare_snapshots(
         findings=findings,
         summary=summarize(findings),
     )
-

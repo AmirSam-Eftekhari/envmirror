@@ -1,0 +1,29 @@
+diff -ruN a/src/envmirror/engine/__init__.py b/src/envmirror/engine/__init__.py
+--- a/src/envmirror/engine/__init__.py	2026-11-07 01:31:00.831789100 +0000
++++ b/src/envmirror/engine/__init__.py	2026-11-07 01:30:47.009361095 +0000
+@@ -77,4 +77,3 @@
+         findings=findings,
+         summary=summarize(findings),
+     )
+-
+diff -ruN a/tests/unit/test_snapshot.py b/tests/unit/test_snapshot.py
+--- a/tests/unit/test_snapshot.py	2026-11-07 01:31:00.835458853 +0000
++++ b/tests/unit/test_snapshot.py	2026-11-07 01:30:47.009814109 +0000
+@@ -140,16 +140,7 @@
+ 
+ 
+ def test_unsupported_older_major_is_rejected(machine_a):
+-    import json
+-
+-    from envmirror.errors import SnapshotError
+-    from envmirror.snapshot_io import parse_snapshot
+-
+     raw = json.loads(machine_a.read_text(encoding="utf-8"))
+     raw["schema_version"] = "0.9"
+-    try:
++    with pytest.raises(SnapshotError, match="older than supported"):
+         parse_snapshot(json.dumps(raw))
+-    except SnapshotError as exc:
+-        assert "older than supported" in str(exc)
+-    else:
+-        raise AssertionError("unsupported older schema major was accepted")
