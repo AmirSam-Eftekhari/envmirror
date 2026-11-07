@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 import re
-from enum import Enum
+from enum import StrEnum
 
 
-class Delta(str, Enum):
+class Delta(StrEnum):
     NONE = "none"
     MAJOR = "major"
     MINOR = "minor"

@@ -4,7 +4,7 @@ import json
 
 from typer.testing import CliRunner
 
-from envmirror.cli import app
+from envmirror.cli import FailOn, OutputFormat, app
 from envmirror.scanner._proc import CommandResult
 from helpers import ok
 
@@ -144,3 +144,21 @@ def test_validate_rejects_invalid_snapshot(tmp_path):
     assert runner.invoke(app, ["validate", str(bad)]).exit_code == 3
     as_json = runner.invoke(app, ["validate", str(bad), "--format", "json"])
     assert json.loads(as_json.stdout)["valid"] is False
+
+
+def test_cli_enums_behave_like_their_string_values():
+    assert str(OutputFormat.json) == "json" and OutputFormat("text") is OutputFormat.text
+    assert [m.value for m in FailOn] == ["critical", "high", "medium", "low", "info", "none"]
+
+
+def test_unknown_enum_option_values_are_usage_errors(machine_a):
+    for option, bad in (("--format", "yaml"), ("--fail-on", "urgent")):
+        result = runner.invoke(app, ["compare", str(machine_a), str(machine_a), option, bad])
+        assert result.exit_code == 2, option
+
+
+def test_enum_options_accept_every_documented_value(machine_a):
+    for value in ("critical", "high", "medium", "low", "info", "none"):
+        result = runner.invoke(app, ["compare", str(machine_a), str(machine_a), "--fail-on", value])
+        assert result.exit_code == 0, value
+    assert runner.invoke(app, ["inspect", str(machine_a), "--format", "text"]).exit_code == 0

@@ -9,7 +9,7 @@ Convention: the *baseline* (first snapshot) is the reference environment, the
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 
 from ..models.comparison import Category
 from ..models.snapshot import Detection, NodeProject, Snapshot
@@ -17,7 +17,7 @@ from ..security.redaction import REDACTED
 from .versions import Delta, version_delta
 
 
-class Kind(str, Enum):
+class Kind(StrEnum):
     MISSING = "missing"  # in baseline, absent in target
     EXTRA = "extra"  # absent in baseline, in target
     CHANGED = "changed"

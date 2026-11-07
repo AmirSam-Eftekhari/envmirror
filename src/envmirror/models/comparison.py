@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict
 
 
-class Severity(str, Enum):
+class Severity(StrEnum):
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -29,7 +29,7 @@ def severity_rank(severity: Severity) -> int:
     return len(SEVERITY_ORDER) - 1 - SEVERITY_ORDER.index(severity)
 
 
-class Classification(str, Enum):
+class Classification(StrEnum):
     """What kind of finding this is. None of these claim causality."""
 
     CONFIRMED = "confirmed_difference"  # unambiguous: something exists on one side only
@@ -37,7 +37,7 @@ class Classification(str, Enum):
     INFORMATIONAL = "informational"  # differs, but rarely relevant on its own
 
 
-class Category(str, Enum):
+class Category(StrEnum):
     SYSTEM = "system"
     RUNTIME = "runtime"
     TOOL = "tool"

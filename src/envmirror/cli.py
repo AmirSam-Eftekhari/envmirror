@@ -12,7 +12,7 @@ file could not be written.
 import json
 import sys
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Annotated, Optional
 
@@ -38,12 +38,12 @@ app = typer.Typer(
 )
 
 
-class OutputFormat(str, Enum):
+class OutputFormat(StrEnum):
     text = "text"
     json = "json"
 
 
-class FailOn(str, Enum):
+class FailOn(StrEnum):
     critical = "critical"
     high = "high"
     medium = "medium"
